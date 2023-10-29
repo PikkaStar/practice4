@@ -1,16 +1,28 @@
+<div class="container px-5 px-sm-0">
+<div class="row">
+  <div class="col-md-3">
 <%= render 'users/user_info',user: @user %>
 <%= render 'new',book: @book %>
-
-<table>
+</div>
+<div class="col-md-8 offset-md-1">
+  <h1>Books</h1>
+<table class="table table-striped">
 <tr>
   <th></th>
+  <th>Name</th>
   <th>Title</th>
   <th>Opinion</th>
+
 </tr>
 
 <% @books.each do |book| %>
 <tr>
-  <td></td>
+  <td>
+    <%= link_to user_path(book.user_id) do %>
+    <%= image_tag book.user.get_profile_image(100,100) %>
+    <% end %>
+    </td>
+    <td><%= book.user.name %></td>
   <td><%= link_to book_path(book.id) do %>
   <%= book.title %>
   <% end %>
@@ -20,3 +32,6 @@
 <% end %>
 
 </table>
+</div>
+</div>
+</div>

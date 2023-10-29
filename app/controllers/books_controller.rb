@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :is_user_current
+before_action :is_user_creater,only: [:edit,:update]
 
   def create
     book = Book.new(book_params)
@@ -39,6 +41,19 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title,:body)
+  end
+
+  def is_user_current
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    end
+   end
+
+  def is_user_creater
+    book = Book.find(params[:id])
+    unless book.user_id == current_user.id
+      redirect_to books_path
+    end
   end
 
 end
