@@ -12,7 +12,8 @@
   <th>Name</th>
   <th>Title</th>
   <th>Opinion</th>
-
+  <th>comments</th>
+  <th></th>
 </tr>
 
 <% @books.each do |book| %>
@@ -22,12 +23,23 @@
     <%= image_tag book.user.get_profile_image(100,100) %>
     <% end %>
     </td>
-    <td><%= book.user.name %></td>
+    <td><%= link_to book.user.name,user_path(book.user_id) %></td>
   <td><%= link_to book_path(book.id) do %>
   <%= book.title %>
   <% end %>
   </td>
   <td><%= book.body %></td>
+  <td>コメント数:<%= book.book_comments.count %></td>
+
+  <% unless book.user_id == current_user.id %>
+  <% if book.favorited_by?(current_user) %>
+    <td><%= link_to book_favorites_path(book.id),method: :delete do %>♥<%= book.favorites.count %>いいね<% end %></td>
+    <% else %>
+    <td><%= link_to book_favorites_path(book.id),method: :post do %>♡<%= book.favorites.count %>いいね<% end %></td>
+    <% end %>
+    <% else %>
+    <td><%= book.favorites.count %>いいね</td>
+    <% end %>
 </tr>
 <% end %>
 

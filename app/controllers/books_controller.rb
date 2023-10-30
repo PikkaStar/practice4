@@ -3,10 +3,17 @@ class BooksController < ApplicationController
 before_action :is_user_creater,only: [:edit,:update]
 
   def create
-    book = Book.new(book_params)
-    book.user_id = current_user.id
-    book.save
-    redirect_to book_path(book.id)
+    @book = Book.new(book_params)
+    @book.user_id = current_user.id
+    if @book.save
+      flash[:notice] = "投稿しました"
+    redirect_to book_path(@book.id)
+  else
+    @books = Book.all
+    @user = current_user
+    render :index
+    @book = Book.new
+  end
   end
 
   def index
@@ -19,6 +26,7 @@ before_action :is_user_creater,only: [:edit,:update]
     @book = Book.find(params[:id])
     @book_new = Book.new
     @user = current_user
+    @comment = BookComment.new
   end
 
   def edit
@@ -27,13 +35,18 @@ before_action :is_user_creater,only: [:edit,:update]
 
   def update
     @book = Book.find(params[:id])
-    @book.update(book_params)
+    if @book.update(book_params)
+      flash[:notice] = "本の情報を更新しました"
     redirect_to book_path(@book.id)
+  else
+    render :edit
+  end
   end
 
   def destroy
     book = Book.find(params[:id])
     book.destroy
+    flash[:notice] = "本を削除しました"
     redirect_to books_path
   end
 

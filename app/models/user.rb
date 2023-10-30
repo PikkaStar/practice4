@@ -7,6 +7,8 @@ class User < ApplicationRecord
          validates :name,uniqueness: true,length: {in: 2..20}
          validates :introduction,length: {maximum: 50}
          has_many :books,dependent: :destroy
+         has_many :book_comments,dependent: :destroy
+         has_many :favorites,dependent: :destroy
 
          def get_profile_image(width,height)
            if profile_image.attached?
@@ -15,6 +17,11 @@ class User < ApplicationRecord
              "no_image"
            end
          end
+         
+         def favorited_by?(user)
+              favorites.exists?(user_id: user.id)
+         end
+
 
 
 end

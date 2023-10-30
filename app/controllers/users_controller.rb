@@ -20,8 +20,18 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(user_params)
+    if @user.update(user_params)
+      flash[:notice] = "プロフィールを編集しました"
     redirect_to user_path(@user)
+  else
+    render :edit
+  end
+  end
+
+  def favorites
+    @user = User.find(params[:id])
+    favorites = Favorite.where(user_id: @user.id).pluck(:book_id)
+    @favorite = Book.find(favorites)
   end
 
   private

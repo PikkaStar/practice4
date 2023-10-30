@@ -10,13 +10,14 @@
   <tr>
     <th>Image</th>
     <th>Name</th>
-    <th></th>
+    <th colspan="2"></th>
   </tr>
 
   <% @users.each do |user| %>
   <tr>
     <td><%= image_tag user.get_profile_image(100,100) %></td>
     <td><%= user.name %></td>
+    <td>投稿数:<%= user.books.count %></td>
     <td><%= link_to "Show",user_path(user.id),class: "btn btn-secondary" %></td>
   </tr>
   <% end %>

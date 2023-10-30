@@ -3,6 +3,15 @@
   <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
 <h1>Editting User</h1>
 
+<% if @user.errors.any? %>
+<%= @user.errors.count %>件のエラー
+<% @user.errors.full_messages.each do |message| %>
+<li>
+  <%= message %>
+</li>
+<% end %>
+<% end %>
+
 <%= form_with model: @user do |f| %>
 <div>
 <%= f.label :name %><br>

@@ -9,6 +9,13 @@
     <th>Introduction</th>
     <td><%= user.introduction %></td>
   </tr>
+  <tr>
+    <th>favorite</th>
+    <td><%= link_to favorites_user_path(user.id) do %>
+    <%= user.favorites.count %>いいね
+    <% end %>
+    </td>
+  </tr>
 </table>
 
 <div class="row">
