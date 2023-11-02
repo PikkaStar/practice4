@@ -25,7 +25,7 @@ before_action :is_user_creater,only: [:edit,:update]
   def show
     @book = Book.find(params[:id])
     @book_new = Book.new
-    @user = current_user
+    @user = @book.user
     @comment = BookComment.new
   end
 
