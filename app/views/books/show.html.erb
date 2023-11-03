@@ -21,8 +21,7 @@
       </td>
     <td><%= @book.title %></td>
     <td><%= @book.body %></td>
-    <td id="comment_count"><%= render "book_comments/comment_count",book: @book %></td>
-    <td><%= render "favorites/favorite_count",book: @book %></td>
+    <td>コメント<span id="comment_count"><%= render "book_comments/comment_count",book: @book %></span>件</td>
     <% if @book.user_id == current_user.id %>
     <td><%= link_to "Edit",edit_book_path(@book.id),class: "btn btn-success" %></td>
     <td><%= link_to "Destroy",book_path(@book.id),method: :delete,"data-confirm"=>"後悔しませんね？",class: "btn btn-danger" %></td>
